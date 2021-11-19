@@ -1,0 +1,15 @@
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\db\helper\ResultSetHelper.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\db\AbstractDbConsumer.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\dao\ComptabiliteDaoImpl.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\rowmapper\comptabilite\JournalComptableRM.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\contrat\DaoProxy.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\contrat\ComptabiliteDao.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\rowmapper\comptabilite\SequenceEcritureComptableRM.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\cache\JournalComptableDaoCache.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\rowmapper\comptabilite\EcritureComptableRM.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\DaoProxyImpl.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\rowmapper\comptabilite\CompteComptableRM.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\db\DataSourcesEnum.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\cache\CompteComptableDaoCache.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\dao\impl\db\rowmapper\comptabilite\LigneEcritureComptableRM.java
+C:\Users\Pierre\Desktop\Projet 9\projet_B4_FR\src\myerp-consumer\src\main\java\com\dummy\myerp\consumer\ConsumerHelper.java
