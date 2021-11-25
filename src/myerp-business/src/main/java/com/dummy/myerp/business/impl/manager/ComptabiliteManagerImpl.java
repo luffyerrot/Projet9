@@ -99,7 +99,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
-    	
     	if (pEcritureComptable != null) {
         	SequenceEcritureComptable lSequenceEcritureComptable = getSequenceEcritureComptableByJournalCodeAndYear(pEcritureComptable.getJournal().getCode(), 1900 + pEcritureComptable.getDate().getYear());
         	String number = null;
@@ -197,6 +196,19 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        String reference = pEcritureComptable.getReference();
+        String annee = StringUtils.substringBeforeLast(StringUtils.substringAfterLast(reference, "-"), "/");
+        String codeJournal = StringUtils.substringBeforeLast(reference, "-");
+        if (!annee.equals(String.valueOf(1900 + pEcritureComptable.getDate().getYear()))) {
+        	throw new FunctionalException(
+                    "L'écriture comptable doit avoir la même année que la référence.");
+        }
+        
+        if (!codeJournal.equals(pEcritureComptable.getJournal().getCode())) {
+        	throw new FunctionalException(
+                    "L'écriture comptable doit avoir le même code journal que la référence.");
+        	
+        }
     }
 
 

@@ -1,10 +1,13 @@
 package com.dummy.myerp.testbusiness;
 
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -13,6 +16,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/com/dummy/myerp/testbusiness/business/bootstrapContext.xml")
@@ -51,5 +55,25 @@ public class BusinessIntegrationTest extends BusinessTestCase {
                 null, null,
                 new BigDecimal(123)));
         manager.addReference(pEcritureComptable);
+	}
+	
+	@Test
+	public void getListCompteComptable() {
+		assertTrue(manager.getListCompteComptable() != null);
+	}
+	
+	@Test
+	public void getListEcritureComptable() {
+		assertTrue(manager.getListEcritureComptable() != null);
+	}
+	
+	@Test
+	public void getListJournalComptable() {
+		assertTrue(manager.getListJournalComptable() != null);
+	}
+	
+	@Test
+	public void getListSequenceEcritureComptable() {
+		assertTrue(manager.getListSequenceEcritureComptable() != null);
 	}
 }
