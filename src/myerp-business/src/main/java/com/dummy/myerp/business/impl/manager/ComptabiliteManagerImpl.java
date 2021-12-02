@@ -37,6 +37,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
 
     // ==================== Getters/Setters ====================
+    
+    public EcritureComptable getEcritureComptable(Integer id) throws NotFoundException {
+        return getDaoProxy().getComptabiliteDao().getEcritureComptable(id);
+    }
+    
     @Override
     public List<CompteComptable> getListCompteComptable() {
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
@@ -50,11 +55,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     
 	@Override
 	public JournalComptable getJournalComptableByCode(String pCode) {
-        try {
+		try {
 			return getDaoProxy().getComptabiliteDao().getJournalComptableByCode(pCode);
 		} catch (NotFoundException e) {
-	        return null;
+			e.printStackTrace();
 		}
+		return null;
 	}
 
     /**
@@ -71,8 +77,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	}
 
 	@Override
-	public SequenceEcritureComptable getSequenceEcritureComptableByJournalCodeAndYear(String journal_code,
-			Integer annee) {
+	public SequenceEcritureComptable getSequenceEcritureComptableByJournalCodeAndYear(String journal_code, Integer annee) {
         try {
 			return getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByJournalCodeAndYear(journal_code, annee);
 		} catch (NotFoundException e) {
@@ -82,6 +87,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * @throws NotFoundException 
      */
     // TODO à tester
     @Override
@@ -117,6 +123,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         	} catch (FunctionalException e) {
         		e.printStackTrace();
         	}
+        	
         	StringBuilder builder = new StringBuilder();
         	builder.append(pEcritureComptable.getJournal().getCode())
         		.append("-")
@@ -224,14 +231,17 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
                 // Recherche d'une écriture ayant la même référence
-                EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
+                List<EcritureComptable> vECRef = (List<EcritureComptable>) getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
                     pEcritureComptable.getReference());
+                if (vECRef.size() > 1) {
+                	throw new FunctionalException("Plusieur écritures comptable existe déjà avec la même référence.");
+                }
 
                 // Si l'écriture à vérifier est une nouvelle écriture (id == null),
                 // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
                 // c'est qu'il y a déjà une autre écriture avec la même référence
                 if (pEcritureComptable.getId() == null
-                    || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                    || !pEcritureComptable.getId().equals(vECRef.get(0).getId())) {
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {
