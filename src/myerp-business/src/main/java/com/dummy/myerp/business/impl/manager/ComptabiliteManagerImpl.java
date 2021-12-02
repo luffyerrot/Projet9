@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -226,24 +227,25 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    protected void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
+    public void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
                 // Recherche d'une écriture ayant la même référence
-                List<EcritureComptable> vECRef = (List<EcritureComptable>) getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
-                    pEcritureComptable.getReference());
-                if (vECRef.size() > 1) {
-                	throw new FunctionalException("Plusieur écritures comptable existe déjà avec la même référence.");
-                }
-
-                // Si l'écriture à vérifier est une nouvelle écriture (id == null),
-                // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
-                // c'est qu'il y a déjà une autre écriture avec la même référence
-                if (pEcritureComptable.getId() == null
-                    || !pEcritureComptable.getId().equals(vECRef.get(0).getId())) {
-                    throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
-                }
+            	try {
+                    EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
+                            pEcritureComptable.getReference());
+                    
+                    // Si l'écriture à vérifier est une nouvelle écriture (id == null),
+                    // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
+                    // c'est qu'il y a déjà une autre écriture avec la même référence
+                    if (pEcritureComptable.getId() == null
+                        || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                        throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
+                    }
+            	} catch (IncorrectResultSizeDataAccessException e) {
+            		throw new FunctionalException("Plusieurs écritures comptable on la même référence");
+            	}
             } catch (NotFoundException vEx) {
                 // Dans ce cas, c'est bon, ça veut dire qu'on n'a aucune autre écriture avec la même référence.
             }
